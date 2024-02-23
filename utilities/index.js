@@ -38,7 +38,7 @@ Util.buildClassificationGrid = async function(data) {
           + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
           + ' details"><img src="' + vehicle.inv_thumbnail 
           +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-          +' on CSE Motors" /></a>'
+          +' on CSE Motors"></a>'
           grid += '<div class="namePrice">'
           grid += '<hr />'
           grid += '<h2>'
@@ -67,7 +67,7 @@ Util.buildItemGrid = async function(data) {
     let vehicle = data[0]
       grid = '<section id="item-display">'
         + '<img src="' + vehicle.inv_image + '" alt="Image of ' + vehicle.inv_make 
-        + ' ' + vehicle.inv_model + ' on CSE Motors" /></a>'
+        + ' ' + vehicle.inv_model + ' on CSE Motors">'
         + '<p>' + vehicle.inv_description + '</p>'
         + '<div class="namePrice">'
         + '<H2>$' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</H2>'
