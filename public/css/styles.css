@@ -329,4 +329,15 @@ section {
   #add-ons {
     width: 45%;
   }
+
+  #item-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #item-display img {
+    grid-column: 1/2;
+    grid-row: 1/4;
+  }
+
 }

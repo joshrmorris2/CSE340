@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const pool = require("../database/")
 const Util = {}
 
 /* ************************
@@ -35,7 +36,7 @@ Util.buildClassificationGrid = async function(data) {
           grid += '<li>'
           grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
           + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-          + 'details"><img src="' + vehicle.inv_thumbnail 
+          + ' details"><img src="' + vehicle.inv_thumbnail 
           +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
           +' on CSE Motors" /></a>'
           grid += '<div class="namePrice">'
@@ -55,6 +56,28 @@ Util.buildClassificationGrid = async function(data) {
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
     }
     return grid
+}
+
+/* **************************************
+* Build the classification view HTML
+* ************************************ */
+Util.buildItemGrid = async function(data) {
+  let grid
+  if(data.length > 0){
+    let vehicle = data[0]
+      grid = '<section id="item-display">'
+        + '<img src="' + vehicle.inv_image + '" alt="Image of ' + vehicle.inv_make 
+        + ' ' + vehicle.inv_model + ' on CSE Motors" /></a>'
+        + '<p>' + vehicle.inv_description + '</p>'
+        + '<div class="namePrice">'
+        + '<H2>$' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</H2>'
+        + '<p>Miles: ' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</p>'
+        + '</div>'
+        + '</section>'
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
 }
 
 /* ****************************************

@@ -28,8 +28,11 @@ app.use(static)
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory route
-app.use("/inv", inventoryRoute)
-// File Not Fond Route - must be the last route
+app.use("/inv", utilities.handleErrors(inventoryRoute))
+app.use('/inv', async (err, req, res, next) => {
+  next({status: 500, message: 'Internal Server Error'})
+})
+// File Not Found Route - must be the last route
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
@@ -41,7 +44,7 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
+  if(err.status == 404 || 500){message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
   res.render('errors/error', {
     title: err.status || 'Server Error',
     message,
