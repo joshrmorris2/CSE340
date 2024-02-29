@@ -50,11 +50,11 @@ app.use(static)
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory route
-app.use("/inv", utilities.handleErrors(require("./routes/inventoryRoute")))
+app.use("/inv", require("./routes/inventoryRoute"))
 app.use('/inv', async (err, req, res, next) => {
   next({status: 500, message: 'Internal Server Error'})
 })
-app.use('/account', utilities.handleErrors(require("./routes/accountRoute")))
+app.use('/account', require("./routes/accountRoute"))
 // File Not Found Route - must be the last route
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})

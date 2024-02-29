@@ -7,9 +7,10 @@
 <%- messages() %>
 
 <fieldset>
+    <label>First Name <input type="text" id="firstName" name="account_fname" required></label>
+    <label>Last Name <input type="text" id="lastName" name="account_lname" required></label>
     <label>Email: <input type="email" id="email" name="account_email" required
             placeholder="example@example.com"></label>
     <label>Password: <input type="password" name="password" id="account_password"></label>
-    <button type="submit">Login</button>
-    <p>No account? <a href="register">Sign-up</a></p>
+    <button type="submit">Register</button>
 </fieldset>
