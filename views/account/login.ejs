@@ -1,0 +1,15 @@
+<%# Content Heading %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+<%- messages() %>
+
+<fieldset>
+    <label>Email: <input type="account_email" id="account_email" name="account_email" required
+            placeholder="example@example.com"></label>
+    <label>Password: <input type="account_password" name="account_password" id="account_password"></label>
+    <button type="submit">Login</button>
+    <p>No account? <a href="signup.ejs">Sign-up</a></p>
+</fieldset>

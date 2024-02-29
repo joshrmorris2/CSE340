@@ -11,7 +11,6 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
-const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities")
 const session = require("express-session")
 const pool = require("./database/")
@@ -30,6 +29,13 @@ app.use(session({
   name: 'sessionId',
 }))
 
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req,res,next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -44,10 +50,11 @@ app.use(static)
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory route
-app.use("/inv", utilities.handleErrors(inventoryRoute))
+app.use("/inv", utilities.handleErrors(require("./routes/inventoryRoute")))
 app.use('/inv', async (err, req, res, next) => {
   next({status: 500, message: 'Internal Server Error'})
 })
+app.use('/account', utilities.handleErrors(require("./routes/accountRoute")))
 // File Not Found Route - must be the last route
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
