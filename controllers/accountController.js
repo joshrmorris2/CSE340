@@ -20,6 +20,7 @@ async function buildRegister(req,res,next) {
     res.render('account/register', {
         title: 'Register',
         nav,
+        errors: null,
     })
 }
 
@@ -51,6 +52,7 @@ async function registerAccount(req, res) {
         res.status(501).render("account/register", {
             title: "Registration",
             nav,
+            errors: null,
       })
     }
   }
