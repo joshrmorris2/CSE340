@@ -6,11 +6,13 @@
     } %>
 <%- messages() %>
 
-<fieldset>
-    <label>First Name <input type="text" id="firstName" name="account_fname" required></label>
-    <label>Last Name <input type="text" id="lastName" name="account_lname" required></label>
-    <label>Email: <input type="email" id="email" name="account_email" required
-            placeholder="example@example.com"></label>
-    <label>Password: <input type="password" name="password" id="account_password"></label>
-    <button type="submit">Register</button>
-</fieldset>
+<form action="/account/register" method="post">
+    <fieldset>
+        <label>First Name <input type="text" id="firstName" name="account_firstname" required></label>
+        <label>Last Name <input type="text" id="lastName" name="account_lastname" required></label>
+        <label>Email: <input type="email" id="email" name="account_email" required
+                placeholder="example@example.com"></label>
+        <label>Password: <input type="password" id="password" name="account_password"></label>
+        <button type="submit">Register</button>
+    </fieldset>
+</form>
