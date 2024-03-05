@@ -5,9 +5,16 @@
         res.redirect('/')
     } %>
 <%- messages() %>
-<form action="" method="">
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
+    </ul> 
+<% } %>
+<form id="loginForm" action="/account/login" method="post">
     <fieldset>
-        <label>Email: <input type="email" id="email" name="account_email" required></label>
+        <label>Email: <input type="email" id="email" name="account_email" required value="<%= locals.account_email %>"></label>
         <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
         <label>Password: <input type="password" id="password" name="account_password" required
             pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
