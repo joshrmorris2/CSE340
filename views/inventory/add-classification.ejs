@@ -1,0 +1,22 @@
+<%# Content Heading %>
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+    
+    <%- messages() %>
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul> 
+    <% } %>
+
+    <form action="/inv/classification" method="post">
+        <fieldset>
+            <label>Classification <p>Classification must be alphabetic characters only, 20 character maximum</p><input type="text" id="classification" name="classification_name" required value="<%= locals.classification_name %>" pattern='[a-zA-Z]{1,20}'></label>
+            <button type="submit">Add Classification</button>
+        </fieldset>
+    </form>

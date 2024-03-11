@@ -1,12 +1,42 @@
 const invModel = require('../models/inventory-model')
 const utilities = require('../utilities')
 
-const invCont = {}
+/* ***************************
+ *  Build inventory modification view
+ * ************************** */
+async function buildInvManagement(req, res, next) {
+    try {
+        let nav = await utilities.getNav()
+        res.render('./inventory/management', {
+            title: 'Vehicle Management',
+            nav,
+            errors: null,
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+/* ***************************
+ *  Build Add New Classification View
+ * ************************** */
+async function buildInvAddClassification(req, res, next) {
+    try {
+        let nav = await utilities.getNav()
+        res.render('./inventory/add-classification', {
+            title: 'Add New Classification',
+            nav,
+            errors: null,
+        })
+    } catch (error) {
+        next(error);
+    }
+}
 
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
-invCont.buildByClassificationId = async function (req, res, next) {
+async function buildByClassificationId(req, res, next) {
     try {
         const classification_id = req.params.classificationId
         const data = await invModel.getInventoryByClassificationId(classification_id)
@@ -26,7 +56,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 /* ***************************
  *  Build inventory by single item view
  * ************************** */
-invCont.buildById = async function (req, res, next) {
+async function buildById(req, res, next) {
     try {
         const inv_id = req.params.invId
         const data = await invModel.getInventoryById(inv_id)
@@ -47,4 +77,39 @@ invCont.buildById = async function (req, res, next) {
     }
 }
 
-module.exports = invCont
+/* ****************************************
+*  Process Add Classification
+* *************************************** */
+async function newClassification(req, res) {
+    console.log('in newClassification - 1')
+    let nav = await utilities.getNav()
+    const { classification_name } = req.body
+
+    const classificationResult = await invModel.addClassification(
+        classification_name
+    )
+    console.log('in newClassification - 2')
+  
+    if (classificationResult) {
+        console.log('in newClassification - 3')
+        req.flash(
+        "notice",
+        `Congratulations, you\'ve added the ${classification_name} classification.`
+        )
+        res.render('./inventory/management', {
+            title: 'Vehicle Management',
+            nav,
+            errors: null,
+        })
+    } else {
+        console.log('in newClassification - 4')
+        req.flash("notice", "Sorry, creating the new classification failed.")
+        res.status(501).render("./inventory/add-classification", {
+            title: "Add New Classification",
+            nav,
+            errors: null,
+      })
+    }
+  }
+
+module.exports = { buildInvManagement, buildInvAddClassification, buildByClassificationId, buildById, newClassification}
