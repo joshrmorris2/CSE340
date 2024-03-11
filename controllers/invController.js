@@ -81,17 +81,15 @@ async function buildById(req, res, next) {
 *  Process Add Classification
 * *************************************** */
 async function newClassification(req, res) {
-    console.log('in newClassification - 1')
-    let nav = await utilities.getNav()
     const { classification_name } = req.body
 
     const classificationResult = await invModel.addClassification(
         classification_name
     )
-    console.log('in newClassification - 2')
+    
+    let nav = await utilities.getNav()
   
     if (classificationResult) {
-        console.log('in newClassification - 3')
         req.flash(
         "notice",
         `Congratulations, you\'ve added the ${classification_name} classification.`
@@ -102,7 +100,6 @@ async function newClassification(req, res) {
             errors: null,
         })
     } else {
-        console.log('in newClassification - 4')
         req.flash("notice", "Sorry, creating the new classification failed.")
         res.status(501).render("./inventory/add-classification", {
             title: "Add New Classification",
