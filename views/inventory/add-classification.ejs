@@ -16,7 +16,10 @@
 
     <form action="/inv/classification" method="post">
         <fieldset>
-            <label>Classification <p>Classification must be alphabetic characters only, 20 character maximum</p><input type="text" id="classification" name="classification_name" required value="<%= locals.classification_name %>" pattern='[a-zA-Z]{1,20}'></label>
+            <label>Classification 
+                <p>Classification must be alphabetic characters only, 20 character maximum</p>
+                <input type="text" id="classification" name="classification_name" required value="<%= locals.classification_name %>" pattern='[a-zA-Z]{1,20}' title="Please enter a valid classification name">
+            </label>
             <button type="submit">Add Classification</button>
         </fieldset>
     </form>

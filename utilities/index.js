@@ -25,6 +25,17 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
+Util.getDropdown = async function (req, res, next) {
+  let data = await invModel.getClassifications()
+  let dropdown = ''
+  data.rows.forEach((row) => {
+    dropdown += '<option value="' + 
+      row.classification_id + '">' +
+      row.classification_name + '</option>'
+  })
+  return dropdown
+}
+
 /* **************************************
 * Build the classification view HTML
 * ************************************ */

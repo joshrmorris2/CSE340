@@ -34,6 +34,24 @@ async function buildInvAddClassification(req, res, next) {
 }
 
 /* ***************************
+ *  Build Add New Vehicle View
+ * ************************** */
+async function buildInvAddVehicle(req, res, next) {
+    try {
+        let nav = await utilities.getNav()
+        let dropdown = await utilities.getDropdown()
+        res.render('./inventory/add-inventory', {
+            title: 'Add New Vehicle',
+            nav,
+            dropdown,
+            errors: null,
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+/* ***************************
  *  Build inventory by classification view
  * ************************** */
 async function buildByClassificationId(req, res, next) {
@@ -86,7 +104,7 @@ async function newClassification(req, res) {
     const classificationResult = await invModel.addClassification(
         classification_name
     )
-    
+
     let nav = await utilities.getNav()
   
     if (classificationResult) {
@@ -109,4 +127,70 @@ async function newClassification(req, res) {
     }
   }
 
-module.exports = { buildInvManagement, buildInvAddClassification, buildByClassificationId, buildById, newClassification}
+/* ****************************************
+ * Process Add Vehicle
+ * *************************************** */
+async function newVehicle(req, res) {
+    const {
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+    } = req.body;
+
+    const vehicleResult = await invModel.addVehicle({
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+    });
+
+    let nav = await utilities.getNav();
+    let dropdown = await utilities.getDropdown();
+
+    if (vehicleResult) {
+        req.flash(
+            "notice",
+            `Congratulations, you've added a new vehicle.`
+        );
+        res.render('./inventory/management', {
+            title: 'Vehicle Management',
+            nav,
+            errors: null,
+        });
+    } else {
+        req.flash("notice", "Sorry, creating the new vehicle failed.");
+        res.status(501).render("./inventory/add-vehicle", {
+            title: "Add New Vehicle",
+            nav,
+            dropdown,
+            errors: null,
+            // Pass other data needed for rendering the form
+            classification_id,
+            inv_make,
+            inv_model,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_year,
+            inv_miles,
+            inv_color,
+        });
+    }
+}
+
+
+module.exports = { buildInvManagement, buildInvAddClassification, buildInvAddVehicle, buildByClassificationId, buildById, newClassification, newVehicle}

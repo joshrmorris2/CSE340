@@ -7,7 +7,7 @@ const invValidate = require('../utilities/inv-validation')
 // Route to add new classification or vehicle
 router.get('/', utilities.handleErrors(invController.buildInvManagement));
 router.get('/classification', utilities.handleErrors(invController.buildInvAddClassification));
-//router.get('/vehicles', utilities.handleErrors(invController.));
+router.get('/vehicle', utilities.handleErrors(invController.buildInvAddVehicle));
 
 // Post routes to add new classification or vehicle
 router.post(
@@ -15,6 +15,11 @@ router.post(
     invValidate.classificationRules(),
     invValidate.checkClassificationData,
     utilities.handleErrors(invController.newClassification));
+router.post(
+    '/vehicle',
+    invValidate.vehicleRules(),
+    invValidate.checkVehicleData,
+    utilities.handleErrors(invController.newVehicle));
 
 
 
