@@ -41,7 +41,6 @@ validate.checkClassificationData = async (req, res, next) => {
  * Define validation for new vehicle
  * ***************************** */
 validate.vehicleRules = () => {
-    console.log('in vehicleRules')
     return [
         // classification_id: required, integer
         body('classification_id')
