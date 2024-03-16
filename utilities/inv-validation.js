@@ -133,12 +133,12 @@ validate.checkVehicleData = async (req, res, next) => {
         let nav = await utilities.getNav();
         let dropdown = await utilities.getDropdown();
 
-        res.render('./inventory/add-vehicle', {
+        res.render('./inventory/add-inventory', {
             errors,
             title: 'Add New Vehicle',
             nav,
-            dropdown,
             classification_id,
+            dropdown,
             inv_make,
             inv_model,
             inv_description,
