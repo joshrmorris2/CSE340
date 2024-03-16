@@ -4,10 +4,11 @@ const utilities = require('../utilities')
 const invController = require("../controllers/invController")
 const invValidate = require('../utilities/inv-validation')
 
-// Route to add new classification or vehicle
+// Route to modify classification or vehicle
 router.get('/', utilities.handleErrors(invController.buildInvManagement));
 router.get('/classification', utilities.handleErrors(invController.buildInvAddClassification));
 router.get('/vehicle', utilities.handleErrors(invController.buildInvAddVehicle));
+router.get('/getInventory/:classification_id', utilities.handleErrors(invController.getInventoryJSON));
 
 // Post routes to add new classification or vehicle
 router.post(

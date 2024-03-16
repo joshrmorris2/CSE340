@@ -7,9 +7,12 @@ const utilities = require('../utilities')
 async function buildInvManagement(req, res, next) {
     try {
         let nav = await utilities.getNav()
+        const dropdown = await utilities.getDropdown()
+
         res.render('./inventory/management', {
             title: 'Vehicle Management',
             nav,
+            dropdown,
             errors: null,
         })
     } catch (error) {
@@ -192,5 +195,26 @@ async function newVehicle(req, res) {
     }
 }
 
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+async function getInventoryJSON(req, res, next) {
+    const classification_id = parseInt(req.params.classification_id)
+    const invData = await invModel.getInventoryByClassificationId(classification_id)
+    if (invData[0].inv_id) {
+      return res.json(invData)
+    } else {
+      next(new Error("No data returned"))
+    }
+}
 
-module.exports = { buildInvManagement, buildInvAddClassification, buildInvAddVehicle, buildByClassificationId, buildById, newClassification, newVehicle}
+module.exports = { 
+    buildInvManagement, 
+    buildInvAddClassification, 
+    buildInvAddVehicle, 
+    buildByClassificationId, 
+    buildById, 
+    newClassification, 
+    newVehicle, 
+    getInventoryJSON
+}
