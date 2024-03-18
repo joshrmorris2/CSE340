@@ -235,6 +235,70 @@ async function newVehicle(req, res) {
     }
 }
 
+updateVehicle
+/* ****************************************
+ * Process Update Vehicle
+ * *************************************** */
+async function updateVehicle(req, res) {
+    let nav = await utilities.getNav();
+
+    const {
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        inv_id,
+    } = req.body;
+
+    const updateResult = await invModel.updateVehicle({
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        inv_id,
+    });
+
+    if (updateResult) {
+        const itemName = updateResult.inv_make + " " + updateResult.inv_model
+        req.flash("notice", `The ${itemName} was successfully updated.`);
+        res.redirect('/inv/')
+    } else {
+        let dropdown = await utilities.getDropdown();
+        const itemName = `${inv_make} ${inv_model}`
+        req.flash("notice", "Sorry, updating the vehicle failed.");
+        res.status(501).render("./inventory/add-vehicle", {
+            title: "Edit " + itemName,
+            nav,
+            dropdown,
+            errors: null,
+            // Pass other data needed for rendering the form
+            classification_id,
+            inv_make,
+            inv_model,
+            inv_description,
+            inv_image,
+            inv_thumbnail,
+            inv_price,
+            inv_year,
+            inv_miles,
+            inv_color,
+            inv_id,
+        });
+    }
+}
+
 /* ***************************
  *  Return Inventory by Classification As JSON
  * ************************** */
@@ -257,5 +321,6 @@ module.exports = {
     buildEditInventory,
     newClassification,
     newVehicle,
+    updateVehicle,
     getInventoryJSON
 }

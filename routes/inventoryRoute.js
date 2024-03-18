@@ -20,9 +20,13 @@ router.post(
 router.post(
     '/vehicle',
     invValidate.vehicleRules(),
-    invValidate.checkVehicleData,
+    invValidate.checkUpdateData,
     utilities.handleErrors(invController.newVehicle));
-
+router.post(
+    '/update/',
+    invValidate.vehicleUpdateRules(),
+    invValidate.checkVehicleData,
+    utilities.handleErrors(invController.updateVehicle));
 
 
 // Route to build inventory by classification view
