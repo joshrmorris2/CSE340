@@ -8,6 +8,7 @@ const Util = {}
  * Constructs the nav HTML unordered list
  ************************** */
 Util.getNav = async function (req, res, next) {
+  console.log('in getNav')
   let data = await invModel.getClassifications()
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
@@ -75,16 +76,16 @@ Util.buildClassificationGrid = async function(data) {
 * Build the classification view HTML
 * ************************************ */
 Util.buildItemGrid = async function(data) {
+  console.log(data);
   let grid
-  if(data.length > 0){
-    let vehicle = data[0]
+  if(data){
       grid = '<section id="item-display">'
-        + '<img src="' + vehicle.inv_image + '" alt="Image of ' + vehicle.inv_make 
-        + ' ' + vehicle.inv_model + ' on CSE Motors">'
-        + '<p>' + vehicle.inv_description + '</p>'
+        + '<img src="' + data.inv_image + '" alt="Image of ' + data.inv_make 
+        + ' ' + data.inv_model + ' on CSE Motors">'
+        + '<p>' + data.inv_description + '</p>'
         + '<div class="namePrice">'
-        + '<H2>$' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</H2>'
-        + '<p>Miles: ' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</p>'
+        + '<H2>$' + new Intl.NumberFormat('en-US').format(data.inv_price) + '</H2>'
+        + '<p>Miles: ' + new Intl.NumberFormat('en-US').format(data.inv_miles) + '</p>'
         + '</div>'
         + '</section>'
   } else { 

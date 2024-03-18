@@ -9,6 +9,7 @@ router.get('/', utilities.handleErrors(invController.buildInvManagement));
 router.get('/classification', utilities.handleErrors(invController.buildInvAddClassification));
 router.get('/vehicle', utilities.handleErrors(invController.buildInvAddVehicle));
 router.get('/getInventory/:classification_id', utilities.handleErrors(invController.getInventoryJSON));
+router.get('/edit/:invId', utilities.handleErrors(invController.buildEditInventory));
 
 // Post routes to add new classification or vehicle
 router.post(

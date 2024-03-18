@@ -84,9 +84,9 @@ async function buildById(req, res, next) {
         const grid = await utilities.buildItemGrid(data)
         let nav = await utilities.getNav()
         if (data.classification_id == 1) {
-            className = data[0].inv_year + ' ' + data[0].inv_model + ' ' + data[0].inv_make
+            className = data.inv_year + ' ' + data.inv_model + ' ' + data.inv_make
         } else{
-            className = data[0].inv_year + ' ' + data[0].inv_make + ' ' + data[0].inv_model
+            className = data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model
         }
         res.render('./inventory/item', {
             title: className,
@@ -95,6 +95,46 @@ async function buildById(req, res, next) {
         })
     } catch (error) {
         next(error);
+    }
+}
+
+/* ***************************
+ *  Build edit inventory view
+ * ************************** */
+async function buildEditInventory(req, res) {
+    try {
+        const inv_id = parseInt(req.params.invId);
+        let nav = await utilities.getNav();
+        console.log('after nav');
+        let data = await invModel.getInventoryById(inv_id);
+        let dropdown = await utilities.getDropdown();
+        let itemName = `${data.inv_make} ${data.inv_model}`
+        console.log('after itemName');
+    
+        res.render("./inventory/edit-inventory", {
+            title: `Edit ${itemName}`,
+            nav,
+            dropdown,
+            errors: null,
+            // Pass other data needed for rendering the form
+            classification_id: data.classification_id,
+            inv_make: data.inv_make,
+            inv_model: data.inv_model,
+            inv_description: data.inv_description,
+            inv_image: data.inv_image,
+            inv_thumbnail: data.inv_thumbnail,
+            inv_price: data.inv_price,
+            inv_year: data.inv_year,
+            inv_miles: data.inv_miles,
+            inv_color: data.inv_color,
+        });
+    } catch (error) {
+        req.flash("notice", "Sorry, something went wrong.");
+        res.render('./inventory/management', {
+            title: 'Vehicle Management',
+            nav,
+            errors: null,
+        });
     }
 }
 
@@ -209,12 +249,13 @@ async function getInventoryJSON(req, res, next) {
 }
 
 module.exports = { 
-    buildInvManagement, 
-    buildInvAddClassification, 
-    buildInvAddVehicle, 
-    buildByClassificationId, 
-    buildById, 
-    newClassification, 
-    newVehicle, 
+    buildInvManagement,
+    buildInvAddClassification,
+    buildInvAddVehicle,
+    buildByClassificationId,
+    buildById,
+    buildEditInventory,
+    newClassification,
+    newVehicle,
     getInventoryJSON
 }
