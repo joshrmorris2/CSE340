@@ -105,11 +105,9 @@ async function buildEditInventory(req, res) {
     try {
         const inv_id = parseInt(req.params.invId);
         let nav = await utilities.getNav();
-        console.log('after nav');
         let data = await invModel.getInventoryById(inv_id);
         let dropdown = await utilities.getDropdown();
         let itemName = `${data.inv_make} ${data.inv_model}`
-        console.log('after itemName');
     
         res.render("./inventory/edit-inventory", {
             title: `Edit ${itemName}`,
@@ -127,6 +125,7 @@ async function buildEditInventory(req, res) {
             inv_year: data.inv_year,
             inv_miles: data.inv_miles,
             inv_color: data.inv_color,
+            inv_id: data.inv_id,
         });
     } catch (error) {
         req.flash("notice", "Sorry, something went wrong.");
