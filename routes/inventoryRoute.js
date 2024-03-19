@@ -28,6 +28,10 @@ router.post(
     invValidate.checkVehicleData,
     utilities.handleErrors(invController.updateVehicle));
 
+// Delete inventory route
+router.get('/delete/:invId', utilities.handleErrors(invController.buildDeleteConfirmation));
+router.post('/delete/', utilities.handleErrors(invController.deleteVehicle));
+
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
