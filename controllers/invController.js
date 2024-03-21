@@ -43,6 +43,7 @@ async function buildInvAddVehicle(req, res, next) {
     try {
         let nav = await utilities.getNav()
         let dropdown = await utilities.getDropdown()
+        console.log(dropdown)
         res.render('./inventory/add-inventory', {
             title: 'Add New Vehicle',
             nav,
@@ -207,11 +208,7 @@ async function newVehicle(req, res) {
             "notice",
             `Congratulations, you've added a new vehicle.`
         );
-        res.render('./inventory/management', {
-            title: 'Vehicle Management',
-            nav,
-            errors: null,
-        });
+        res.redirect('/inv/')
     } else {
         req.flash("notice", "Sorry, creating the new vehicle failed.");
         res.status(501).render("./inventory/add-vehicle", {

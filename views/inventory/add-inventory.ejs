@@ -17,9 +17,7 @@
     <form action="/inv/vehicle" method="post">
         <fieldset>
             <label>Classification 
-                <select id="classification" name="classification_id" required value="<%= locals.classification_id %>">
-                    <%- dropdown %>
-                </select>
+                <%- dropdown %>
             </label>
             <label>Make 
                 <input type="text" id="make" name="inv_make" required value="<%= locals.inv_make %>"

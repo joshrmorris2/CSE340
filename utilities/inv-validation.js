@@ -85,7 +85,7 @@ validate.vehicleRules = () => {
         // inv_price: required, numeric
         body('inv_price')
             .trim()
-            .isNumeric()
+            .isCurrency()
             .withMessage('Please enter a valid price.'),
 
         // inv_year: required, four-digit numeric
@@ -131,14 +131,15 @@ validate.checkVehicleData = async (req, res, next) => {
 
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
-        let dropdown = await utilities.getDropdown();
+        let dropdown = await utilities.getDropdown(classification_id);
+        console.log(dropdown)
 
         res.render('./inventory/add-inventory', {
             errors,
             title: 'Add New Vehicle',
             nav,
-            classification_id,
             dropdown,
+            classification_id,
             inv_make,
             inv_model,
             inv_description,
