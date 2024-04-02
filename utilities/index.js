@@ -112,6 +112,7 @@ Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
+    console.log('In checkJWT')
     jwt.verify(
     req.cookies.jwt,
     process.env.ACCESS_TOKEN_SECRET,
@@ -139,6 +140,7 @@ Util.checkJWTToken = (req, res, next) => {
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
+    console.log (res.locals.loggedin, res.locals.privileges, res.locals.accountData)
     next()
   } else {
     req.flash('notice', 'Please log in.')

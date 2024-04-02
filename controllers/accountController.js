@@ -33,13 +33,30 @@ async function buildRegister(req,res,next) {
 * *************************************** */
 async function buildAccount(req,res,next) {
     let nav = await utilities.getNav()
+    user = res.locals.accountData
     res.render('account/account', {
-        title: 'Account',
+        title: 'Welcome ' + user.account_firstname,
         nav,
         errors: null,
     })
 }
-buildAccount
+
+/* ***************************
+ *  Build edit account view
+ * ************************** */
+async function buildEditAccount(req, res) {
+    try {
+        let nav = await utilities.getNav();
+        res.render("./account/edit-account", {
+            title: 'Edit Account',
+            nav,
+            errors: null,
+        });
+    } catch (error) {
+        req.flash("notice", "Sorry, something went wrong.", error);
+        res.redirect('/account/')
+    }
+}
 
 /* ****************************************
 *  Process Registration
@@ -123,11 +140,11 @@ async function accountLogin(req, res) {
 }
 
 /* ****************************************
- *  Process login request
+ *  Process logout request
  * ************************************ */
 async function accountLogout(req, res) {
     res.clearCookie("jwt")
     res.redirect('/')
 }
 
-module.exports = { buildLogin, buildRegister, buildAccount, registerAccount, accountLogin, accountLogout }
+module.exports = { buildLogin, buildRegister, buildAccount, buildEditAccount, registerAccount, accountLogin, accountLogout }

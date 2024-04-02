@@ -8,6 +8,7 @@ router.get('/', utilities.checkLogin, utilities.handleErrors(accountController.b
 router.get('/login', utilities.handleErrors(accountController.buildLogin));
 router.get('/register', utilities.handleErrors(accountController.buildRegister));
 router.get('/logout', utilities.checkLogin, utilities.handleErrors(accountController.accountLogout))
+router.get('/update', utilities.checkLogin, utilities.handleErrors(accountController.buildEditAccount))
 router.post(
     '/register',
     regValidate.registrationRules(),
