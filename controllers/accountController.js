@@ -120,6 +120,14 @@ async function accountLogin(req, res) {
     } catch (error) {
         return new Error('Access Forbidden')
     }
-   }
+}
 
-module.exports = { buildLogin, buildRegister, buildAccount, registerAccount, accountLogin }
+/* ****************************************
+ *  Process login request
+ * ************************************ */
+async function accountLogout(req, res) {
+    res.clearCookie("jwt")
+    res.redirect('/')
+}
+
+module.exports = { buildLogin, buildRegister, buildAccount, registerAccount, accountLogin, accountLogout }

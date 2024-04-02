@@ -146,4 +146,12 @@ Util.checkLogin = (req, res, next) => {
   }
 }
 
+Util.adminAccess = (req, res, next) => {
+  if (!res.locals.privileges) {
+    req.flash('notice', 'Insufficient privileges.')
+    return res.redirect('/account/login')
+  }
+  next()
+}
+
 module.exports = Util
