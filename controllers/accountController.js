@@ -53,7 +53,7 @@ async function buildEditAccount(req, res) {
             errors: null,
         });
     } catch (error) {
-        req.flash("notice", "Sorry, something went wrong.", error);
+        req.flash("notice", "Sorry, something went wrong.");
         res.redirect('/account/')
     }
 }

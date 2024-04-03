@@ -156,15 +156,10 @@ validate.editAccountRules = () => {
 
 // Middleware to check data and return errors or continue to account information editing
 validate.checkEditAccountData = async (req, res, next) => {
-    const { account_firstname, account_lastname, account_email } = req.body;
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
-        let nav = await utilities.getNav();
-        res.render("./account/edit-account", {
-            title: 'Edit Account',
-            nav,
-            errors,
-        });
+        req.flash("notice", "Sorry, something went wrong.");
+        res.redirect('/account/update')
         return;
     }
     next();
@@ -192,11 +187,8 @@ validate.editPasswordRules = () => {
 validate.checkEditPasswordData = async (req, res, next) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.render("./account/edit-account", {
-            title: 'Edit Account',
-            nav,
-            errors,
-        });
+        req.flash("notice", "Sorry, something went wrong.");
+        res.redirect('/account/update')
         return;
     }
     next();
