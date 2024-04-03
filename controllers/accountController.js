@@ -107,6 +107,48 @@ async function registerAccount(req, res) {
   }
 
 /* ****************************************
+*  Process Edit Account information
+* *************************************** */
+const updateAccount = async (req, res) => {
+    // Extract account data from request body
+    const { account_firstname, account_lastname, account_email } = req.body;
+
+    // Update account information in the database
+    try {
+        await accountModel.updateAccount(req.locals.account_id, { account_firstname, account_lastname, account_email });
+        req.flash('success_msg', 'Account information updated successfully.');
+        res.redirect('/account'); // Redirect to account dashboard or profile page
+    } catch (error) {
+        console.error('Error updating account:', error);
+        req.flash('error_msg', 'An error occurred while updating account information.');
+        res.redirect('/account'); // Redirect to account dashboard or profile page with error message
+    }
+};
+
+/* ****************************************
+*  Process Edit Account Password
+* *************************************** */
+const updatePassword = async (req, res) => {
+    // Extract new password from request body
+    const { account_password } = req.body;
+
+    // Hash the new password before updating
+    const hashedPassword = await bcrypt.hash(account_password, 10);
+
+    // Update password in the database
+    try {
+        await accountModel.updatePassword(req.locals.account_id, hashedPassword);
+        req.flash('success_msg', 'Password updated successfully.');
+        res.redirect('/account'); // Redirect to account dashboard or profile page
+    } catch (error) {
+        console.error('Error updating password:', error);
+        req.flash('error_msg', 'An error occurred while updating password.');
+        res.redirect('/account'); // Redirect to account dashboard or profile page with error message
+    }
+};
+
+
+/* ****************************************
  *  Process login request
  * ************************************ */
 async function accountLogin(req, res) {
@@ -147,4 +189,13 @@ async function accountLogout(req, res) {
     res.redirect('/')
 }
 
-module.exports = { buildLogin, buildRegister, buildAccount, buildEditAccount, registerAccount, accountLogin, accountLogout }
+module.exports = { 
+    buildLogin, 
+    buildRegister, 
+    buildAccount, 
+    buildEditAccount, 
+    registerAccount,
+    updateAccount,
+    updatePassword,
+    accountLogin, 
+    accountLogout }
