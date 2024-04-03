@@ -13,7 +13,7 @@
     </ul> 
 <% } %>
 
-<form action="/account/update" id="updateForm" method="post">
+<form action="/account/update/personal" id="updatePersonalForm" method="post">
     <fieldset>
         <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>">
         
@@ -26,19 +26,20 @@
         <label for="account_email">Email</label>
         <input type="email" id="account_email" name="account_email" required value="<%= locals.accountData.account_email %>">
         
+        <button type="submit">Update Personal Information</button>
+    </fieldset>
+</form>
+
+<form action="/account/update/password" id="updatePasswordForm" method="post">
+    <fieldset>
+        <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>">
+        
         <label for="account_password">Password</label>
         <input type="password" id="account_password" name="account_password" required>
         
         <label for="confirm_password">Confirm Password</label>
         <input type="password" id="confirm_password" name="confirm_password" required>
-
-        <label for="account_type">Account Type</label>
-        <select id="account_type" name="account_type">
-            <option value="Client" <%= locals.accountData.account_type === 'Client' ? 'selected' : '' %>>Client</option>
-            <option value="Employee" <%= locals.accountData.account_type === 'Employee' ? 'selected' : '' %>>Employee</option>
-            <option value="Admin" <%= locals.accountData.account_type === 'Admin' ? 'selected' : '' %>>Admin</option>
-        </select>
         
-        <button type="submit">Update Account</button>
+        <button type="submit">Update Password</button>
     </fieldset>
 </form>
