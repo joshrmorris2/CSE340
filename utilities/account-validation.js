@@ -160,13 +160,10 @@ validate.checkEditAccountData = async (req, res, next) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
-        res.render('account/edit', {
-            errors,
-            title: 'Edit Account Information',
+        res.render("./account/edit-account", {
+            title: 'Edit Account',
             nav,
-            account_firstname,
-            account_lastname,
-            account_email,
+            errors,
         });
         return;
     }
@@ -195,11 +192,10 @@ validate.editPasswordRules = () => {
 validate.checkEditPasswordData = async (req, res, next) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
-        let nav = await utilities.getNav();
-        res.render('account/edit-password', {
-            errors,
-            title: 'Change Password',
+        res.render("./account/edit-account", {
+            title: 'Edit Account',
             nav,
+            errors,
         });
         return;
     }
