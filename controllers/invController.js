@@ -43,7 +43,6 @@ async function buildInvAddVehicle(req, res, next) {
     try {
         let nav = await utilities.getNav()
         let dropdown = await utilities.getDropdown()
-        console.log(dropdown)
         res.render('./inventory/add-inventory', {
             title: 'Add New Vehicle',
             nav,

@@ -131,7 +131,6 @@ validate.checkVehicleData = async (req, res, next) => {
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
         let dropdown = await utilities.getDropdown(classification_id);
-        console.log(dropdown)
 
         res.render('./inventory/add-inventory', {
             errors,
