@@ -82,7 +82,6 @@ Util.buildClassificationGrid = async function(data) {
 * Build the classification view HTML
 * ************************************ */
 Util.buildItemGrid = async function(data) {
-  console.log(data);
   let grid
   if(data){
       grid = '<section id="item-display">'
@@ -112,23 +111,22 @@ Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
-    console.log('In checkJWT')
     jwt.verify(
-    req.cookies.jwt,
-    process.env.ACCESS_TOKEN_SECRET,
-    function (err, accountData) {
-      if (err) {
-        req.flash("Please log in")
-        res.clearCookie("jwt")
-        return res.redirect("/account/login")
-      }
-      res.locals.accountData = accountData
-      res.locals.loggedin = true
-      res.locals.privileges = false
-      if (accountData.accountType !== 'Employee' && accountData.accountType !== 'Admin') {
-        res.locals.privileges = true
-    }
-      next()
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in")
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = true
+        res.locals.privileges = false
+        if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') {
+          res.locals.privileges = true
+        }
+        next()
     })
   } else {
     next()
@@ -140,7 +138,6 @@ Util.checkJWTToken = (req, res, next) => {
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
-    console.log (res.locals.loggedin, res.locals.privileges, res.locals.accountData)
     next()
   } else {
     req.flash('notice', 'Please log in.')

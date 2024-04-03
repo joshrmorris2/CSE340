@@ -342,21 +342,16 @@ async function buildDeleteConfirmation(req, res) {
  * Process Delete Vehicle
  * *************************************** */
 async function deleteVehicle(req, res) {
-    console.log('deleteVehicle 1');
     let nav = await utilities.getNav();
     let data = req.body;
     const inv_id = parseInt(data.inv_id);
     let itemName = `${ data.inv_make} ${data.inv_model}`
-    console.log('deleteVehicle 2');
     const deleteResult = await invModel.deleteVehicle(inv_id);
 
-    console.log('deleteVehicle 3');
     if (deleteResult) {
-        console.log('deleteVehicle 4');
         req.flash("notice", `Vehicle successfully deleted.`);
         res.redirect('/inv/')
     } else {
-        console.log('deleteVehicle 5');
         req.flash("notice", `Sorry, deleting the ${itemName} failed.`);
         res.render("./inventory/delete-confirm", {
             title: `Delete ${itemName}`,

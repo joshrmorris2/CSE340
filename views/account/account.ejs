@@ -14,9 +14,8 @@
 <% } %>
 
 <a href="/account/update/">Update account information</a>
-<%= console.log (locals.loggedin, locals.privileges, locals.accountData) %>
 
 <% if (locals.privileges) { %>
     <h3>Inventory Management</h3>
-    <p><a href="/inventory-management">Access Inventory Management</a></p>
+    <p><a href="/inv">Access Inventory Management</a></p>
 <% } %>
