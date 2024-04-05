@@ -66,9 +66,9 @@ async function updateAccount(account_id, newData) {
 * ***************************** */
 async function updatePassword(account_id, newPassword) {
     try {
+        console.log('updatePassword model')
         const sql = "UPDATE account SET account_password = $1 WHERE account_id = $2";
-        await pool.query(sql, [newPassword, account_id]);
-        return true; // Return true indicating successful update
+        return response = await pool.query(sql, [newPassword, account_id]);
     } catch (error) {
         console.error("Error updating account password:", error);
         return false; // Return false indicating failure

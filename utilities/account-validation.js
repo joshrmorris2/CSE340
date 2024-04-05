@@ -158,7 +158,8 @@ validate.editAccountRules = () => {
 validate.checkEditAccountData = async (req, res, next) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
-        req.flash("notice", "Sorry, something went wrong.");
+        const errorMessages = errors.array().map(error => error.msg);
+        req.flash("notice", errorMessages);
         res.redirect('/account/update')
         return;
     }
@@ -187,7 +188,8 @@ validate.editPasswordRules = () => {
 validate.checkEditPasswordData = async (req, res, next) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
-        req.flash("notice", "Sorry, something went wrong.");
+        const errorMessages = errors.array().map(error => error.msg);
+        req.flash("notice", errorMessages);
         res.redirect('/account/update')
         return;
     }

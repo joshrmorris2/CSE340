@@ -36,11 +36,15 @@
     <fieldset>
         <input type="hidden" id="account_id" name="account_id" value="<%= locals.accountData.account_id %>">
         
+        
+        <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span><br>
         <label for="account_password">Password</label>
-        <input type="password" id="account_password" name="account_password" required>
+        <input type="password" id="account_password" name="account_password" required
+            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
         
         <label for="confirm_password">Confirm Password</label>
-        <input type="password" id="confirm_password" name="confirm_password" required>
+        <input type="password" id="confirm_password" name="confirm_password" required
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
         
         <button type="submit">Update Password</button>
     </fieldset>

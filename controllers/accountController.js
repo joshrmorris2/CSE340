@@ -143,14 +143,14 @@ const updateAccount = async (req, res) => {
 * *************************************** */
 const updatePassword = async (req, res) => {
     // Extract new password from request body
-    const { account_password } = req.body;
+    const { account_password, account_id } = req.body;
 
     // Hash the new password before updating
     const hashedPassword = await bcrypt.hash(account_password, 10);
 
     // Update password in the database
     try {
-        await accountModel.updatePassword(req.locals.account_id, hashedPassword);
+        await accountModel.updatePassword(account_id, hashedPassword);
         req.flash('success_msg', 'Password updated successfully.');
         res.redirect('/account'); // Redirect to account dashboard or profile page
     } catch (error) {
