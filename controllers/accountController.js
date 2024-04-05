@@ -111,11 +111,24 @@ async function registerAccount(req, res) {
 * *************************************** */
 const updateAccount = async (req, res) => {
     // Extract account data from request body
-    const { account_firstname, account_lastname, account_email } = req.body;
+    const { account_firstname, account_lastname, account_email, account_id } = req.body;
 
     // Update account information in the database
     try {
-        await accountModel.updateAccount(req.locals.account_id, { account_firstname, account_lastname, account_email });
+        await accountModel.updateAccount(account_id, { account_firstname, account_lastname, account_email });
+        // Generate a new JWT with updated account information
+        const updatedAccount = {
+            account_id,
+            account_firstname,
+            account_lastname,
+            account_email,
+        };
+        const accessToken = jwt.sign(updatedAccount, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 });
+        if(process.env.NODE_ENV === 'development') {
+            res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+        } else {
+            res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+        }
         req.flash('success_msg', 'Account information updated successfully.');
         res.redirect('/account'); // Redirect to account dashboard or profile page
     } catch (error) {

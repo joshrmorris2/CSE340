@@ -15,7 +15,8 @@
 
 <form action="/account/update/account" id="updateAccountForm" method="post">
     <fieldset>
-        <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>">
+        <input type="hidden" id="account_id" name="account_id" value="<%= locals.accountData.account_id %>">
+        
         
         <label for="account_firstname">First Name</label>
         <input type="text" id="account_firstname" name="account_firstname" required value="<%= locals.accountData.account_firstname %>">
@@ -25,6 +26,7 @@
         
         <label for="account_email">Email</label>
         <input type="email" id="account_email" name="account_email" required value="<%= locals.accountData.account_email %>">
+        <input type="hidden" id="current_email" name="current_email" value="<%= locals.accountData.account_email %>">
         
         <button type="submit">Update Personal Information</button>
     </fieldset>
@@ -32,7 +34,7 @@
 
 <form action="/account/update/password" id="updatePasswordForm" method="post">
     <fieldset>
-        <input type="hidden" name="account_id" value="<%= locals.accountData.account_id %>">
+        <input type="hidden" id="account_id" name="account_id" value="<%= locals.accountData.account_id %>">
         
         <label for="account_password">Password</label>
         <input type="password" id="account_password" name="account_password" required>
