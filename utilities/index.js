@@ -153,4 +153,14 @@ Util.adminAccess = (req, res, next) => {
   next()
 }
 
+Util.formatSearchString = function(userSearchString) {
+  // Split the user-submitted search string into individual terms
+  const terms = userSearchString.split(' ');
+  
+  // Join the terms with the OR operator ('|')
+  const formattedString = terms.join(' | ');
+  
+  return formattedString;
+}
+
 module.exports = Util

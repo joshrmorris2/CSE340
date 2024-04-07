@@ -65,6 +65,7 @@ app.use('/inv', async (err, req, res, next) => {
   next({status: 500, message: 'Internal Server Error'})
 })
 app.use('/account', require("./routes/accountRoute"))
+app.use('/search', require("./routes/search"))
 // File Not Found Route - must be the last route
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})

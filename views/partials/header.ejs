@@ -2,6 +2,14 @@
     <span class="siteName">
         <a href="/" title="Return to home page">CSE Motors</a>
     </span>
+    <div id="search">
+        <form action="/search" method="get">
+            <fieldset>
+                <label>Search: <input type="text" id="search_term" name="search_term" required value="<%= locals.searchTerm %>"></label>
+                <button type="submit">Search</button>
+            </fieldset>
+        </form>
+    </div>
     <div id="tools">
         <% if (locals.loggedin) { %>
             <a href="/account/">Welcome <%= locals.accountData.account_firstname %></a>
